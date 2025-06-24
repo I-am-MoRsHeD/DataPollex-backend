@@ -8,5 +8,17 @@ export const createCourse = (data: ICourse) => {
 };
 
 export const getCourses = async () => {
-    await Course.find({});
+    return await Course.find({});
+};
+
+export const getSingleCourse = async(id : string) => {
+    return await Course.findById(id);
+};
+
+export const updateCourse = async (id: string, data: ICourse) => {
+    return await Course.findByIdAndUpdate(id, data, { new: true });
+};
+
+export const deleteCourse = async (id: string) => {
+    return await Course.findByIdAndDelete(id);
 }

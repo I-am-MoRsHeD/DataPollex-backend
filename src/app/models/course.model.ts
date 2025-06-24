@@ -25,10 +25,6 @@ export const courseSchema = new Schema<ICourse>({
         required: true,
         trim: true,
         minlength: 20
-    },
-    modules: {
-        type: Schema.Types.ObjectId,
-        ref: 'Module'
     }
 }, {
     versionKey : false,
@@ -39,8 +35,7 @@ export const CourseZodSchema = z.object({
     thumbnail: z.string().min(1).max(255),
     title: z.string().min(1).max(255),
     price: z.number(),
-    description: z.string().min(20).trim(),
-    modules : z.string().optional()
+    description: z.string().min(20).trim()
 });
 
 const Course = model('Course', courseSchema);
