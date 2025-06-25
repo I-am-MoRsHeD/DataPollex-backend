@@ -2,23 +2,25 @@ import { ICourse } from "../interfaces/course.interface";
 import Course, { CourseZodSchema } from "../models/course.model";
 
 
-export const createCourse = (data: ICourse) => {
-    const body = CourseZodSchema.parse(data);
+const createCourse = (data: ICourse) => {
+    const body = CourseZodSchema.parseAsync(data);
     return Course.create(body);
 };
 
-export const getCourses = async () => {
+const getCourses = async () => {
     return await Course.find({});
 };
 
-export const getSingleCourse = async(id : string) => {
+const getSingleCourse = async(id : string) => {
     return await Course.findById(id);
 };
 
-export const updateCourse = async (id: string, data: ICourse) => {
+const updateCourse = async (id: string, data: ICourse) => {
     return await Course.findByIdAndUpdate(id, data, { new: true });
 };
 
-export const deleteCourse = async (id: string) => {
+const deleteCourse = async (id: string) => {
     return await Course.findByIdAndDelete(id);
-}
+};
+
+export { createCourse, getCourses, getSingleCourse, updateCourse, deleteCourse };

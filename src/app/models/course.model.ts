@@ -36,7 +36,7 @@ export const CourseZodSchema = z.object({
     title: z.string().min(1).max(255),
     price: z.number(),
     description: z.string().min(20).trim()
-});
+}).strict();
 
 const Course = model('Course', courseSchema);
 export default Course;
