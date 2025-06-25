@@ -40,18 +40,34 @@ export const getAllCourses = async (req: Request, res: Response) => {
 export const getCourseWithModulesHandler = async (req: Request, res: Response) => {
     try {
         const courseWithModules = await getCourseWithModules();
-        res.json(courseWithModules);
-    } catch (error : unknown) {
-        
+        res.status(200).json({
+            success: true,
+            message: 'Course with modules fetched successfully',
+            data: courseWithModules
+        });
+    } catch (error: unknown) {
+        res.status(400).json({
+            success: false,
+            message: "Modules fetch failed",
+            error
+        })
     }
 };
 
 export const getModulesbyCourseIdHandler = async (req: Request, res: Response) => {
     try {
         const data = await getModulesbyCourseId(req.params.id);
-        res.json(data);
-    } catch (error : unknown) {
-        
+        res.status(200).json({
+            success: true,
+            message: "Modules fetched successfully",
+            data
+        });
+    } catch (error: unknown) {
+        res.status(400).json({
+            success: false,
+            message: "Modules fetch failed",
+            error
+        })
     }
 }
 

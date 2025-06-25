@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createModule, deleteModule, getModules, updateModule } from "../services/module.service";
+import { createModule, deleteModule, getLectureByModuleId, getModules, updateModule } from "../services/module.service";
 
 
 export const createModuleHandler = async (req: Request, res: Response) => {
@@ -36,6 +36,24 @@ export const getAllModules = async (req: Request, res: Response) => {
     }
 };
 
+export const getLectureByModuleIdHandler = async (req: Request, res: Response) => {
+    try {
+        const lectures = await getLectureByModuleId(req.params.id);
+
+        res.status(200).json({
+            success: true,
+            message: "Lectures fetched successfully",
+            data: lectures
+        })
+    } catch (error: unknown) {
+        res.status(400).json({
+            success: false,
+            message: "Lectures fetch failed",
+            error
+        })
+    }
+}
+
 export const updateModuleHandler = async (req: Request, res: Response) => {
     try {
         const module = await updateModule(req.params.id, req.body);
@@ -45,7 +63,7 @@ export const updateModuleHandler = async (req: Request, res: Response) => {
                 message: "Module not found"
             });
         };
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Module updated successfully",
             data: module
@@ -62,7 +80,7 @@ export const updateModuleHandler = async (req: Request, res: Response) => {
 export const deleteModuleHandler = async (req: Request, res: Response) => {
     try {
         const body = await deleteModule(req.params.id);
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Module deleted successfully",
             data: body
