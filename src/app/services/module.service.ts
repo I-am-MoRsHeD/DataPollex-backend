@@ -21,6 +21,10 @@ const getLectureByModuleId = async (id: string) => {
     return await Lecture.find({ moduleId: id });
 };
 
+const getSingleModule = async (id: string) => {
+    return await Module.findById(id);
+};
+
 const updateModule = async (id: string, data: IModule) => {
     return Module.findByIdAndUpdate(id, data, { new: true });
 };
@@ -29,4 +33,4 @@ const deleteModule = async (id: string) => {
     return Module.findByIdAndDelete(id);
 };
 
-export { createModule, getModules, getLectureByModuleId ,updateModule, deleteModule };
+export { createModule, getModules, getLectureByModuleId ,getSingleModule ,updateModule, deleteModule };

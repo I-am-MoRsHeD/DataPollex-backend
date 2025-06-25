@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createModule, deleteModule, getLectureByModuleId, getModules, updateModule } from "../services/module.service";
+import { createModule, deleteModule, getLectureByModuleId, getModules, getSingleModule, updateModule } from "../services/module.service";
 
 
 export const createModuleHandler = async (req: Request, res: Response) => {
@@ -52,7 +52,24 @@ export const getLectureByModuleIdHandler = async (req: Request, res: Response) =
             error
         })
     }
-}
+};
+
+export const getSingleModuleHandler = async (req: Request, res: Response) => {
+    try {
+        const module = await getSingleModule(req.params.id);
+        res.status(200).json({
+            success: true,
+            message: 'Module fetched successfully',
+            data: module
+        })
+    } catch (error: unknown) {
+        res.status(400).json({
+            success: false,
+            message: 'Module fetch failed',
+            error
+        })
+    }
+};
 
 export const updateModuleHandler = async (req: Request, res: Response) => {
     try {
