@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createCourse, deleteCourse, getCourses, getSingleCourse, updateCourse } from "../services/course.service";
+import { createCourse, deleteCourse, getCourses, getCourseWithModules, getModulesbyCourseId, getSingleCourse, updateCourse } from "../services/course.service";
 
 
 export const createCourseHandler = async (req: Request, res: Response) => {
@@ -36,6 +36,24 @@ export const getAllCourses = async (req: Request, res: Response) => {
         })
     }
 };
+
+export const getCourseWithModulesHandler = async (req: Request, res: Response) => {
+    try {
+        const courseWithModules = await getCourseWithModules();
+        res.json(courseWithModules);
+    } catch (error : unknown) {
+        
+    }
+};
+
+export const getModulesbyCourseIdHandler = async (req: Request, res: Response) => {
+    try {
+        const data = await getModulesbyCourseId(req.params.id);
+        res.json(data);
+    } catch (error : unknown) {
+        
+    }
+}
 
 export const getSingleCourseHandler = async (req: Request, res: Response) => {
     try {

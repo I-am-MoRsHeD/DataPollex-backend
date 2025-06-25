@@ -38,5 +38,5 @@ export const CourseZodSchema = z.object({
     description: z.string().min(20).trim()
 }).strict();
 
-const Course = model('Course', courseSchema);
+const Course = model<ICourse>('Course', courseSchema);
 export default Course;

@@ -17,16 +17,17 @@ const moduleSchema = new Schema<IModule>({
     },
     moduleNumber: {
         type: Number,
-        required: true,
-        unique: true
+        required: true
     }
+}, {
+    versionKey: false,
+    timestamps: true
 });
 
 export const moduleZodSchema = z.object({
     courseId: z.string(),
-    title: z.string().min(5),
-    moduleNumber: z.number()
-});
+    title: z.string().min(5)
+}).strict();
 
 const Module = model<IModule>('Module', moduleSchema);
 export default Module;

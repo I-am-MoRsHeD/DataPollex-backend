@@ -1,16 +1,22 @@
+import { IModule } from "../interfaces/module.interface";
 import Module, { moduleZodSchema } from "../models/module.model";
 
 
-const createModule = async (data: any) => {
-    const body = moduleZodSchema.parseAsync(data);
-    return Module.create(body);
+const createModule = async (data: IModule) => {
+    const body = await moduleZodSchema.parseAsync(data);
+
+    const count = await Module.countDocuments({ courseId: body.courseId });
+    const moduleNumber = count + 1;
+    const moduleData = { ...body, moduleNumber };
+    
+    return await Module.create(moduleData);
 };
 
 const getModules = async () => {
     return Module.find({}).populate('courseId');
 };
 
-const updateModule = async (id: string, data: any) => {
+const updateModule = async (id: string, data: IModule) => {
     return Module.findByIdAndUpdate(id, data, { new: true });
 };
 

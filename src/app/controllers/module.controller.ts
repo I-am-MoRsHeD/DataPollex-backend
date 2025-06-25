@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { createModule, deleteModule, getModules, updateModule } from "../services/module.service";
 
 
-const createModuleHandler = async (req: Request, res: Response) => {
+export const createModuleHandler = async (req: Request, res: Response) => {
     try {
         const body = await createModule(req.body);
         res.status(201).json({
@@ -19,7 +19,7 @@ const createModuleHandler = async (req: Request, res: Response) => {
     }
 };
 
-const getAllModules = async (req: Request, res: Response) => {
+export const getAllModules = async (req: Request, res: Response) => {
     try {
         const modules = await getModules();
         res.status(200).json({
@@ -36,13 +36,19 @@ const getAllModules = async (req: Request, res: Response) => {
     }
 };
 
-const updateModuleHandler = async (req: Request, res: Response) => {
+export const updateModuleHandler = async (req: Request, res: Response) => {
     try {
-        const body = await updateModule(req.params.id, req.body);
+        const module = await updateModule(req.params.id, req.body);
+        if(!module){
+            res.status(404).json({
+                success: false,
+                message: "Module not found"
+            });
+        };
         res.status(201).json({
             success: true,
             message: "Module updated successfully",
-            data: body
+            data: module
         });
     } catch (error: unknown) {
         res.status(400).json({
@@ -53,7 +59,7 @@ const updateModuleHandler = async (req: Request, res: Response) => {
     }
 };
 
-const deleteModuleHandler = async (req: Request, res: Response) => {
+export const deleteModuleHandler = async (req: Request, res: Response) => {
     try {
         const body = await deleteModule(req.params.id);
         res.status(201).json({
@@ -69,5 +75,3 @@ const deleteModuleHandler = async (req: Request, res: Response) => {
         })
     }
 };
-
-export { createModuleHandler, getAllModules, updateModuleHandler, deleteModuleHandler };
