@@ -19,7 +19,7 @@ const lectureSchema = new Schema<ILecture>({
         required: true
     },
     pdfNotes: {
-        type: [String],
+        type: String,
         required: true
     }
 }, {
@@ -31,7 +31,7 @@ export const lectureZodSchema = z.object({
     moduleId: z.string(),
     title: z.string().min(5),
     videoUrl: z.string(),
-    pdfNotes: z.array(z.string())
+    pdfNotes: z.string().url()
 });
 
 

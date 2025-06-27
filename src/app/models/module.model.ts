@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { IModule } from "../interfaces/module.interface";
 import { z } from "zod";
+import Lecture from "./lecture.model";
 
 
 const moduleSchema = new Schema<IModule>({
@@ -28,6 +29,14 @@ export const moduleZodSchema = z.object({
     courseId: z.string(),
     title: z.string().min(5)
 }).strict();
+
+moduleSchema.post('findOneAndDelete', async function (doc) {
+    if (!doc) return;
+    const moduleId = doc._id;
+    await Lecture.deleteMany({ moduleId });
+    console.log(`Deleted module ${moduleId}, related lectures also deleted.`);
+});
+
 
 const Module = model<IModule>('Module', moduleSchema);
 export default Module;

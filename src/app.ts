@@ -1,4 +1,6 @@
+import 'dotenv/config';
 import express, { Application, Request, Response } from 'express';
+import cors from 'cors';
 import { authRouter } from './app/routes/auth.route';
 import { courseRouter } from './app/routes/course.route';
 import { moduleRouter } from './app/routes/module.route';
@@ -7,6 +9,9 @@ import { lectureRouter } from './app/routes/lecture.route';
 export const app: Application = express();
 
 app.use(express.json());
+app.use(cors({
+    origin: '*',
+}))
 
 app.use('/api/auth', authRouter);
 app.use('/api/course', courseRouter);

@@ -35,7 +35,7 @@ export const courseSchema = new Schema<ICourse>({
 });
 
 export const CourseZodSchema = z.object({
-    thumbnail: z.string().min(1).max(255),
+    thumbnail: z.string().url(),
     title: z.string().min(1).max(255),
     price: z.number(),
     description: z.string().min(20).trim()
